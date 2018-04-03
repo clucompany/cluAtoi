@@ -3,22 +3,33 @@
 
 use std::slice::Iter;
 
+/// Result trait Atoi
 pub type AtoiResult<T> = Result<T, AtoiErr>;
 
+///Parsing the byte sequence of the ascii characters and safely converting them to integers.
 pub trait Atoi<T> {
-    fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T>;
-    fn atoi_end<'a>(array: &'a [u8], end: u8) -> AtoiResult<T>;
 
+	///Array parsing
+    fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T>;
+	///Array parsing and stopping on the 'X' character
+    fn atoi_end<'a>(array: &'a [u8], end: u8) -> AtoiResult<T>;
+	
+	///Array parsing an array using an iterator
     fn atoi_iter<'a>(iter: &'a mut Iter<u8>) -> AtoiResult<T>;
+	///Array parsing an array using an iterator and stopping on the 'X' character
     fn atoi_iter_end<'a>(iter: &'a mut Iter<u8>, end: u8) -> AtoiResult<T>;
 }
 
 #[derive(Debug)]
 pub enum AtoiErr {
+	///Overflow of number
     Overflow,
+	///In the byte sequence, an unknown character was used
     ByteUnk(u8),
 }
 
+
+///Unsigned Atoi Macros
 macro_rules! atoi {
 	(add, $iter:expr) => {{	
 		let mut result: Self = 0;
@@ -127,7 +138,7 @@ macro_rules! atoi {
 }
 
 
-
+///Signed Atoi Macros
 macro_rules! iatoi {
 	(add_event, $a:expr, $result:expr) => {
 		if !(*$a >= b'0' && *$a <= b'9') {
