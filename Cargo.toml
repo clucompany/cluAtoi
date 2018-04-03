@@ -2,7 +2,13 @@
 
 name = "cluatoi"
 version = "0.1.3"
-authors = ["#Ulin Project 17-18"]
+authors = ["Денис Котляров <#Ulin Project 17-18", denis2005991@gmail.com>]
+repository = "https://github.com/clucompany/cluAtoi.git"
+homepage = "https://github.com/clucompany/cluAtoi.git"
+license = "Apache 2.0"
+readme = "README.md"
+
+description = "An open library written in the language of system programming Rust is used to analyze and bring the sequence of ascii bytes to many integer primitives of the language Rust (u8, u16, u32, u64, u128, i8, i16, i32, i64, i128)."
 
 [dependencies]
 
