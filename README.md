@@ -37,7 +37,7 @@ Use - Использование:
 
 		let array_end = b"1245T";
 
-		let my_int = u64::atoi(&array_end, b'T').unwrap(); //1245u64
+		let my_int = u64::atoi_end(&array_end, b'T').unwrap(); //1245u64
 
 	}
 
