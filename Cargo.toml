@@ -8,7 +8,7 @@ homepage = "https://github.com/clucompany/cluAtoi.git"
 license = " Apache-2.0"
 readme = "README.md"
 
-description = "An open library written in the language of system programming Rust is used to analyze and bring the sequence of ascii bytes to many integer primitives of the language Rust (u8, u16, u32, u64, u128, i8, i16, i32, i64, i128)."
+description = "Parsing the byte sequence of the ascii characters and safely converting them to integers."
 
 [dependencies]
 
