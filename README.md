@@ -14,7 +14,7 @@ Capabilities:
 Use:
 
 	extern crate cluatoi;
-	use cluatoi::atoi;
+	use cluatoi::Atoi;
 
 	fn main() {
 
