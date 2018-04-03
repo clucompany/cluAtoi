@@ -1,4 +1,9 @@
-# Atoi [![Build Status](https://travis-ci.org/clucompany/cluAtoi.svg?branch=master)](https://travis-ci.org/clucompany/cluAtoi)
+# Atoi 
+
+[![Build Status](https://travis-ci.org/clucompany/cluAtoi.svg?branch=master)](https://travis-ci.org/clucompany/cluAtoi)
+[![Apache licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE.txt)
+[![crates.io](http://meritbadge.herokuapp.com/cluatoi)](https://crates.io/crates/cluatoi)
+[![Documentation](https://docs.rs/cluatoi/badge.svg)](https://docs.rs/cluatoi)
 
 Parsing the byte sequence of the ascii characters and safely converting them to integers.
 
@@ -30,6 +35,9 @@ Use:
 
 	}
 	
+
+Russian:
+
 Разбор байтовой последовательности символов ascii и безопасное преобразование их в целые числа.
 
 Открытая библиотека написанная на языке системного программирования Rust, используется для анализа и приведения последовательности байтов ascii во многие целочисленные примитивы языка Rust(u8, u16, u32, u64, u128, i8, i16, i32, i64, i128). Присутстует возможность подставки byte итераторов для продолжения парсинга byte массивов без создания отдельного byte массива или byte среза.
@@ -41,6 +49,9 @@ Use:
 4. Возврат перечисления в случае ошибки
 5. Использование IterByteArray
 
-#cluOpenLibs
 
-#UlinProject 17-18
+License
+
+Copyright 2018 #UlinProject Денис Котляров
+
+Licensed under the Apache License, Version 2.0
