@@ -25,19 +25,19 @@ Capabilities:
 Use - Использование:
 	
 	extern crate cluatoi;
-	use self::cluatoi::atoi;
+	use cluatoi::atoi;
 
 	fn main() {
 
 		let array = b"-1245";
-		let isize = isize::atoi(&array).unwrap(); //  -1245isize
+		let isize = isize::atoi(array).unwrap(); //  -1245isize
 
-		let usize = usize::atoi(&array).unwrap()  //  AtoiErr(ByteUnk(b'-'))
+		let usize = usize::atoi(array).unwrap();  //  AtoiErr(ByteUnk(b'-'))
 
 
 		let array_end = b"1245T";
 
-		let my_int = u64::atoi_end(&array_end, b'T').unwrap(); //1245u64
+		let my_int = u64::atoi_end(array_end, b'T').unwrap(); //1245u64
 
 	}
 
