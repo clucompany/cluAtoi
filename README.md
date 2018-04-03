@@ -1,4 +1,4 @@
-# Atoi
+# Atoi [![Build Status](https://travis-ci.org/clucompany/cluAtoi.svg?branch=master)](https://travis-ci.org/clucompany/cluAtoi)
 
 Info:
 
