@@ -1,7 +1,7 @@
 # Atoi 
 
 [![Build Status](https://travis-ci.org/clucompany/cluAtoi.svg?branch=master)](https://travis-ci.org/clucompany/cluAtoi)
-[![Apache licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE.txt)
+[![Apache licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
 [![crates.io](http://meritbadge.herokuapp.com/cluatoi)](https://crates.io/crates/cluatoi)
 [![Documentation](https://docs.rs/cluatoi/badge.svg)](https://docs.rs/cluatoi)
 
