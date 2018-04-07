@@ -332,16 +332,19 @@ checked_impl!(u, u8);
 checked_impl!(u, u16);
 checked_impl!(u, u32);
 checked_impl!(u, u64);
-checked_impl!(u, u128);
 checked_impl!(u, usize);
 
 checked_impl!(i, i8);
 checked_impl!(i, i16);
 checked_impl!(i, i32);
 checked_impl!(i, i64);
-checked_impl!(i, i128);
+
 checked_impl!(i, isize);
 
+#[cfg(nightly)]
+checked_impl!(i, i128);
+#[cfg(nightly)]
+checked_impl!(u, u128);
 
 
 #[cfg(test)]
