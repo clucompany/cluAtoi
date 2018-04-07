@@ -349,9 +349,7 @@ checked_impl!(u, u128);
 
 #[cfg(test)]
 mod tests {
-	use super::Atoi;
-	use super::AtoiErr;
-	use super::AtoiResult;
+	use super::*;
 	
 	#[test]
 	fn overflow() {
@@ -360,6 +358,8 @@ mod tests {
 		assert_eq!(u16::atoi(b"65536"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(u32::atoi(b"4294967296"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(u64::atoi(b"18446744073709551616"), Result::Err(AtoiErr::Overflow));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"340282366920938463463374607431768211456"), Result::Err(AtoiErr::Overflow));
 		
 		//max self + 1
@@ -367,7 +367,9 @@ mod tests {
 		assert_eq!(i16::atoi(b"32768"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(i32::atoi(b"2147483648"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(i64::atoi(b"9223372036854775808"), Result::Err(AtoiErr::Overflow));
-		assert_eq!(i64::atoi(b"170141183460469231731687303715884105728"), Result::Err(AtoiErr::Overflow));
+		
+		#[cfg(nightly)]
+		assert_eq!(i128::atoi(b"170141183460469231731687303715884105728"), Result::Err(AtoiErr::Overflow));
 	}
 	
 	#[test]
@@ -376,12 +378,16 @@ mod tests {
 		assert_eq!(u16::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u64::atoi(b"0"), Result::Ok(0));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"0"), Result::Ok(0));
 		
 		assert_eq!(i8::atoi(b"0"), Result::Ok(0));
 		assert_eq!(i16::atoi(b"0"), Result::Ok(0));
 		assert_eq!(i32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(i64::atoi(b"0"), Result::Ok(0));
+		
+		#[cfg(nightly)]
 		assert_eq!(i128::atoi(b"0"), Result::Ok(0));
 	}
 	
@@ -393,6 +399,8 @@ mod tests {
 		assert_eq!(u16::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		assert_eq!(u32::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		assert_eq!(u64::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		
 		//min self
@@ -400,6 +408,8 @@ mod tests {
 		assert_eq!(u16::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u64::atoi(b"0"), Result::Ok(0));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"0"), Result::Ok(0));
 		
 		//max self
@@ -407,6 +417,8 @@ mod tests {
 		assert_eq!(u16::atoi(b"65535"), Result::Ok(65535));
 		assert_eq!(u32::atoi(b"4294967295"), Result::Ok(4294967295));
 		assert_eq!(u64::atoi(b"18446744073709551615"), Result::Ok(18446744073709551615));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"340282366920938463463374607431768211455"), Result::Ok(340282366920938463463374607431768211455));
 	}
 	
@@ -417,6 +429,8 @@ mod tests {
 		assert_eq!(i16::atoi(b"-128"), Result::Ok(-128));
 		assert_eq!(i32::atoi(b"-128"), Result::Ok(-128));
 		assert_eq!(i64::atoi(b"-128"), Result::Ok(-128));
+		
+		#[cfg(nightly)]
 		assert_eq!(i128::atoi(b"-128"), Result::Ok(-128));
 		
 		//-1
@@ -424,6 +438,8 @@ mod tests {
 		assert_eq!(i16::atoi(b"-1"), Result::Ok(-1));
 		assert_eq!(i32::atoi(b"-1"), Result::Ok(-1));
 		assert_eq!(i64::atoi(b"-1"), Result::Ok(-1));
+		
+		#[cfg(nightly)]
 		assert_eq!(i128::atoi(b"-1"), Result::Ok(-1));
 		
 				
@@ -432,6 +448,8 @@ mod tests {
 		assert_eq!(i16::atoi(b"32767"), Result::Ok(32767));
 		assert_eq!(i32::atoi(b"2147483647"), Result::Ok(2147483647));
 		assert_eq!(i64::atoi(b"9223372036854775807"), Result::Ok(9223372036854775807));
+		
+		#[cfg(nightly)]
 		assert_eq!(i128::atoi(b"170141183460469231731687303715884105727"), Result::Ok(170141183460469231731687303715884105727));
 		
 		//min self
@@ -439,6 +457,8 @@ mod tests {
 		assert_eq!(i16::atoi(b"-32768"), Result::Ok(-32768));
 		assert_eq!(i32::atoi(b"-2147483648"), Result::Ok(-2147483648));
 		assert_eq!(i64::atoi(b"-9223372036854775808"), Result::Ok(-9223372036854775808));
+		
+		#[cfg(nightly)]
 		assert_eq!(i128::atoi(b"-170141183460469231731687303715884105728"), Result::Ok(-170141183460469231731687303715884105728));
 		
 	}
@@ -449,6 +469,8 @@ mod tests {
 		assert_eq!(u16::atoi(b"128L"), Result::Err(AtoiErr::ByteUnk(b'L')));
 		assert_eq!(u32::atoi(b"128I"), Result::Err(AtoiErr::ByteUnk(b'I')));
 		assert_eq!(u64::atoi(b"128N"), Result::Err(AtoiErr::ByteUnk(b'N')));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi(b"128."), Result::Err(AtoiErr::ByteUnk(b'.')));
 	}
 	
@@ -458,6 +480,8 @@ mod tests {
 		assert_eq!(u16::atoi_end(b"128L", b'L'), Result::Ok(128));
 		assert_eq!(u32::atoi_end(b"128I", b'I'), Result::Ok(128));
 		assert_eq!(u64::atoi_end(b"128N", b'N'), Result::Ok(128));
+		
+		#[cfg(nightly)]
 		assert_eq!(u128::atoi_end(b"128.", b'.'), Result::Ok(128));
 	}
 }
