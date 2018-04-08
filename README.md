@@ -7,8 +7,6 @@
 
 Parsing the byte sequence of the ascii characters and safely converting them to integers.
 
-An open library written in the language of system programming Rust is used to analyze and bring the sequence of ascii bytes to many integer primitives of the language Rust (u8, u16, u32, u64, u128, i8, i16, i32, i64, i128). There is the possibility of using the byte iterators to continue parsing byte arrays without creating a separate byte array or byte slice.
-
 Capabilities:
 1. Convert ASCII byte sequences to integer primitives Rust.
 2. Protection against overflow of numbers
@@ -18,23 +16,52 @@ Capabilities:
 	
 Use:
 
+#1
+
 	extern crate cluatoi;
 	use cluatoi::Atoi;
 
 	fn main() {
+	    let isize = isize::atoi(b"-1245").unwrap(); 		
+	    //-1245isize
 
-		let array = b"-1245";
-		let isize = isize::atoi(array).unwrap(); //  -1245isize
+	    let usize = usize::atoi(b"1245").unwrap();
+	    //1245usize
 
-		let usize = usize::atoi(array).unwrap();  //  AtoiErr(ByteUnk(b'-'))
+	    let my_int = u64::atoi_stop(b"1245T", b'T').unwrap(); 	
+	    //1245u64
 
-
-		let array_end = b"1245T";
-
-		let my_int = u64::atoi_end(array_end, b'T').unwrap(); //1245u64
-
+	    let my_int = u64::atoi_iter(b"1245".iter()).unwrap(); 	
+	    //1245u64
 	}
-	
+
+#2
+
+	extern crate cluatoi;
+	use cluatoi::Atoi;
+
+	fn main() {
+	    let array = b"1024!18446744073709551610!-1!X";
+	    let mut array_iter = array.iter();
+
+
+	    let num_0 = u64::atoi_iter_wait_stop(&mut array_iter, b'!').unwrap(); 
+	    //1024u64
+
+	    let num_1 = u64::atoi_iter_wait_stop(&mut array_iter, b'!').unwrap(); 
+	    //18446744073709551610u64
+
+	    let num_err = usize::atoi_iter_wait_stop(&mut array_iter, b'!');
+	    //ERROR, ISIZE VALUE + USIZE TYPE
+	    //Err(ByteUnk(45))
+
+	    let end_byte = array_iter.next().unwrap();
+	    //X
+
+	    println!("{}!{}!{:?}!{}", num_0, num_1, num_err, end_byte);
+	    //1024!18446744073709551610!Err(ByteUnk(45))!88
+	}
+
 
 Russian:
 
