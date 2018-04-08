@@ -7,6 +7,7 @@
 
 Parsing the byte sequence of the ascii characters and safely converting them to integers.
 
+
 Capabilities:
 1. Convert ASCII byte sequences to integer primitives Rust.
 2. Protection against overflow of numbers
@@ -67,7 +68,6 @@ Russian:
 
 Разбор байтовой последовательности символов ascii и безопасное преобразование их в целые числа.
 
-Открытая библиотека написанная на языке системного программирования Rust, используется для анализа и приведения последовательности байтов ascii во многие целочисленные примитивы языка Rust(u8, u16, u32, u64, u128, i8, i16, i32, i64, i128). Присутстует возможность подставки byte итераторов для продолжения парсинга byte массивов без создания отдельного byte массива или byte среза.
 
 Возможности:
 1. Преобразование ASCII byte последовательности в целочисленные примитивы Rust.
