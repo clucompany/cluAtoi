@@ -8,14 +8,14 @@
 Parsing the byte sequence of the ascii characters and safely converting them to integers.
 
 
-Capabilities:
+# Capabilities:
 1. Convert ASCII byte sequences to integer primitives Rust.
 2. Protection against overflow of numbers
 3. Accounting for the features of signed, unsigned primitives
 4. Return of the transfer in case of an error
 5. Using IterByteArray
 	
-Use:
+# Use:
 
 #1
 
@@ -64,12 +64,12 @@ Use:
 	}
 
 
-Russian:
+# Russian:
 
 Разбор байтовой последовательности символов ascii и безопасное преобразование их в целые числа.
 
 
-Возможности:
+# Возможности:
 1. Преобразование ASCII byte последовательности в целочисленные примитивы Rust.
 2. Защита предотвращяющяя переполнения чисел
 3. Учет особенностей signed, unsigned примитивов
@@ -77,7 +77,7 @@ Russian:
 5. Использование IterByteArray
 
 
-License
+# License
 
 Copyright 2018 #UlinProject Денис Котляров
 
