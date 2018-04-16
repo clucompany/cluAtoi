@@ -30,7 +30,6 @@ Parsing the byte sequence of the ascii characters and safely converting them to 
 # Use:
 
 ```rust
-extern crate cluatoi;
 use cluatoi::Atoi;
 
 fn main() {
@@ -49,7 +48,6 @@ fn main() {
 ```
 
 ```rust
-extern crate cluatoi;
 use cluatoi::Atoi;
 
 fn main() {
@@ -86,6 +84,8 @@ pub trait Atoi<T> {
 	///Array parsing.
 	///
 	///```rust
+	///use cluatoi::Atoi;
+	///
 	///fn main() {
 	///	if let Ok(num) = isize::atoi(b"-1024") {
 	///		println!("TEST {}", num);
@@ -98,6 +98,8 @@ pub trait Atoi<T> {
 	///Array parsing and stopping on the 'X' character.
 	///
 	///```rust
+	///use cluatoi::Atoi;
+	///
 	///fn main() {
 	///	let array = b"A1024~0";
 	///
