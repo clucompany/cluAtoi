@@ -1,12 +1,12 @@
 [package]
-
 name = "cluatoi"
 version = "0.1.7"
 authors = ["Денис Котляров <#Ulin Project 18, denis2005991@gmail.com>"]
 repository = "https://github.com/clucompany/cluAtoi.git"
-homepage = "https://github.com/clucompany/cluAtoi.git"
 license = " Apache-2.0"
 readme = "README.md"
+
+keywords = ["atoi", "cluatoi", "parse_byte"]
 
 description = "Parsing the byte sequence of the ascii characters and safely converting them to integers."
 
