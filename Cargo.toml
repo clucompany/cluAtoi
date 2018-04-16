@@ -6,7 +6,7 @@ repository = "https://github.com/clucompany/cluAtoi.git"
 license = " Apache-2.0"
 readme = "README.md"
 
-keywords = ["atoi", "cluatoi", "parse_byte"]
+keywords = ["atoi", "cluatoi", "parse_byte", "clucompany"]
 categories = ["development-tools"]
 
 description = "Parsing the byte sequence of the ascii characters and safely converting them to integers."
