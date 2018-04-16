@@ -7,6 +7,7 @@ license = " Apache-2.0"
 readme = "README.md"
 
 keywords = ["atoi", "cluatoi", "parse_byte"]
+categories = ["os::unix-apis"]
 
 description = "Parsing the byte sequence of the ascii characters and safely converting them to integers."
 
