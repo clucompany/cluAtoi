@@ -605,13 +605,17 @@ macro_rules! atoi_build_fn {
 macro_rules! atoi_build_type {
 	(u, $t:ty) => {
 		impl Atoi<Self> for $t {
+			#[inline]
 			fn atoi<'a>(array: &'a [u8]) -> AtoiResult< Self > {				
 				Self::atoi_iter(&mut array.iter())
 			}
 
+			#[inline]
 			fn atoi_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
 				Self::atoi_iter_stop(&mut array.iter(), end)
 			}
+			
+			#[inline]
 			fn atoi_wait_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
 				Self::atoi_iter_wait_stop(&mut array.iter(), end)
 			}
@@ -630,13 +634,17 @@ macro_rules! atoi_build_type {
 	};
 	(i, $t:ty) => {
 		impl Atoi<Self> for $t {
+			#[inline]
 			fn atoi<'a>(array: &'a [u8]) -> AtoiResult< Self > {				
 				Self::atoi_iter(&mut array.iter())
 			}
 
+			#[inline]
 			fn atoi_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
 				Self::atoi_iter_stop(&mut array.iter(), end)
 			}
+
+			#[inline]
 			fn atoi_wait_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {
 				Self::atoi_iter_wait_stop(&mut array.iter(), end)
 			}
