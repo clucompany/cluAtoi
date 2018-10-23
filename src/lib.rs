@@ -79,6 +79,10 @@ fn main() {
 ///Type result Atoi.
 pub type AtoiResult<T> = Result<T, AtoiErr>;
 
+#[doc(hidden)]
+#[allow(non_camel_case_types)]
+pub type cluAtoi<T> = Atoi<T>;
+
 ///Parsing the byte sequence of the ascii characters and safely converting them to integers.
 pub trait Atoi<T> {
 	///Array parsing.
@@ -92,7 +96,10 @@ pub trait Atoi<T> {
 	///	}
 	///}
 	///```
-	fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T>;
+	#[inline]
+	fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T> {
+		Self::atoi_iter(array.iter())
+	}
 	
 	
 	///Array parsing and stopping on the 'X' character.
@@ -135,7 +142,10 @@ pub trait Atoi<T> {
 	///}
 	///```
 	///
-	fn atoi_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T>;
+	#[inline]
+	fn atoi_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {
+		Self::atoi_iter_stop(array.iter(), stop)
+	}
 	
 	///An array analysis using an iterator and waiting for an "X" character even if an error occurred.
 	///
@@ -158,7 +168,10 @@ pub trait Atoi<T> {
 	///}
 	///```
 	///
-	fn atoi_wait_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T>;
+	#[inline]
+	fn atoi_wait_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {				
+		Self::atoi_iter_wait_stop(array.iter(), stop)
+	}
 	
 	
 	///Array parsing using an iterator.
@@ -177,7 +190,7 @@ pub trait Atoi<T> {
 	///	}
 	///}
 	///```
-	fn atoi_iter<'a>(iter: &'a mut Iterator<Item=&u8>) -> AtoiResult<T>;
+	fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(iter: I) -> AtoiResult<T>;
 	
 	
 	///Array parsing using an iterator and stopping on the 'X' character.
@@ -219,7 +232,7 @@ pub trait Atoi<T> {
 	///}
 	///```
 	///
-	fn atoi_iter_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult<T>;
+	fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T>;
 	
 	
 	///An array analysis using an iterator and waiting for an "X" character even if an error occurred.
@@ -243,7 +256,70 @@ pub trait Atoi<T> {
 	///}
 	///```
 	///
-	fn atoi_iter_wait_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult<T>;
+	fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T>;
+}
+
+impl<'l, A: Atoi<T>, T> Atoi<T> for &'l A {
+	#[inline(always)]
+	fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T> {
+		A::atoi(array)
+	}
+	
+	#[inline(always)]
+	fn atoi_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {
+		A::atoi_stop(array, stop)
+	}
+	
+	#[inline(always)]
+	fn atoi_wait_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {
+		A::atoi_wait_stop(array, stop)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(iter: I) -> AtoiResult<T> {
+		A::atoi_iter(iter)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T> {
+		A::atoi_iter_stop(iter, end)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T> {
+		A::atoi_iter_wait_stop(iter, end)
+	}
+}
+impl<'l, A: Atoi<T>, T> Atoi<T> for &'l mut A {
+	#[inline(always)]
+	fn atoi<'a>(array: &'a [u8]) -> AtoiResult<T> {
+		A::atoi(array)
+	}
+	
+	#[inline(always)]
+	fn atoi_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {
+		A::atoi_stop(array, stop)
+	}
+	
+	#[inline(always)]
+	fn atoi_wait_stop<'a>(array: &'a [u8], stop: u8) -> AtoiResult<T> {
+		A::atoi_wait_stop(array, stop)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(iter: I) -> AtoiResult<T> {
+		A::atoi_iter(iter)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T> {
+		A::atoi_iter_stop(iter, end)
+	}
+	
+	#[inline(always)]
+	fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(iter: I, end: u8) -> AtoiResult<T> {
+		A::atoi_iter_wait_stop(iter, end)
+	}
 }
 
 ///Result trait Atoi
@@ -603,84 +679,48 @@ macro_rules! atoi_build_fn {
 
 
 macro_rules! atoi_build_type {
-	(u, $t:ty) => {
-		impl Atoi<Self> for $t {
-			#[inline]
-			fn atoi<'a>(array: &'a [u8]) -> AtoiResult< Self > {				
-				Self::atoi_iter(&mut array.iter())
-			}
-
-			#[inline]
-			fn atoi_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
-				Self::atoi_iter_stop(&mut array.iter(), end)
-			}
-			
-			#[inline]
-			fn atoi_wait_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
-				Self::atoi_iter_wait_stop(&mut array.iter(), end)
-			}
-			
-			fn atoi_iter<'a>(iter: &'a mut Iterator<Item=&u8>) -> AtoiResult< Self > {
+	(u, $($t:ty),+ ) => {
+		$(
+		impl Atoi<$t> for $t {
+			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< Self > {
 				atoi_build!(unsigned, iter);
 			}
 
-			fn atoi_iter_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
 				atoi_build!(unsigned, iter, end);
 			}
-			fn atoi_iter_wait_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
 				atoi_build!(unsigned_wait_end, iter, end);
 			}
 		}
+		)+
 	};
-	(i, $t:ty) => {
-		impl Atoi<Self> for $t {
-			#[inline]
-			fn atoi<'a>(array: &'a [u8]) -> AtoiResult< Self > {				
-				Self::atoi_iter(&mut array.iter())
-			}
-
-			#[inline]
-			fn atoi_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {				
-				Self::atoi_iter_stop(&mut array.iter(), end)
-			}
-
-			#[inline]
-			fn atoi_wait_stop<'a>(array: &'a [u8], end: u8) -> AtoiResult< Self > {
-				Self::atoi_iter_wait_stop(&mut array.iter(), end)
-			}
-			
-			fn atoi_iter<'a>(iter: &'a mut Iterator<Item=&u8>) -> AtoiResult< Self > {
+	(i, $($t:ty),+ ) => {
+		$(
+		impl Atoi<$t> for $t {
+			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< Self > {
 				atoi_build!(signed, iter);
 			}
 
-			fn atoi_iter_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
 				atoi_build!(signed, iter, end);
 			}
-			fn atoi_iter_wait_stop<'a>(iter: &'a mut Iterator<Item=&u8>, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
 				atoi_build!(signed_wait_end, iter, end);
 			}
 		}
+		)+
 	}
 }
 
 
-atoi_build_type!(u, u8);
-atoi_build_type!(u, u16);
-atoi_build_type!(u, u32);
-atoi_build_type!(u, u64);
-
-atoi_build_type!(i, i8);
-atoi_build_type!(i, i16);
-atoi_build_type!(i, i32);
-atoi_build_type!(i, i64);
-
-atoi_build_type!(i, isize);
-atoi_build_type!(u, usize);
+atoi_build_type!(u, u8, u16, u32, u64, usize);
+atoi_build_type!(i, i8, i16, i32, i64, isize);
 
 
-#[cfg(unstable)]
+//#[cfg(unstable)]
 atoi_build_type!(i, i128);
-#[cfg(unstable)]
+//#[cfg(unstable)]
 atoi_build_type!(u, u128);
 
 
@@ -696,7 +736,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"4294967296"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(u64::atoi(b"18446744073709551616"), Result::Err(AtoiErr::Overflow));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"340282366920938463463374607431768211456"), Result::Err(AtoiErr::Overflow));
 		
 		//max self + 1
@@ -705,7 +745,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"2147483648"), Result::Err(AtoiErr::Overflow));
 		assert_eq!(i64::atoi(b"9223372036854775808"), Result::Err(AtoiErr::Overflow));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"170141183460469231731687303715884105728"), Result::Err(AtoiErr::Overflow));
 	}
 	
@@ -716,7 +756,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u64::atoi(b"0"), Result::Ok(0));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"0"), Result::Ok(0));
 		
 		assert_eq!(i8::atoi(b"0"), Result::Ok(0));
@@ -724,7 +764,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(i64::atoi(b"0"), Result::Ok(0));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"0"), Result::Ok(0));
 	}
 	
@@ -737,7 +777,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		assert_eq!(u64::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"-128"), Result::Err(AtoiErr::ByteUnk(b'-')));
 		
 		//min self
@@ -746,7 +786,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"0"), Result::Ok(0));
 		assert_eq!(u64::atoi(b"0"), Result::Ok(0));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"0"), Result::Ok(0));
 		
 		//max self
@@ -755,7 +795,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"4294967295"), Result::Ok(4294967295));
 		assert_eq!(u64::atoi(b"18446744073709551615"), Result::Ok(18446744073709551615));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"340282366920938463463374607431768211455"), Result::Ok(340282366920938463463374607431768211455));
 	}
 	
@@ -767,7 +807,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"-128"), Result::Ok(-128));
 		assert_eq!(i64::atoi(b"-128"), Result::Ok(-128));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"-128"), Result::Ok(-128));
 		
 		//-1
@@ -776,7 +816,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"-1"), Result::Ok(-1));
 		assert_eq!(i64::atoi(b"-1"), Result::Ok(-1));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"-1"), Result::Ok(-1));
 		
 				
@@ -786,7 +826,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"2147483647"), Result::Ok(2147483647));
 		assert_eq!(i64::atoi(b"9223372036854775807"), Result::Ok(9223372036854775807));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"170141183460469231731687303715884105727"), Result::Ok(170141183460469231731687303715884105727));
 		
 		//min self
@@ -795,7 +835,7 @@ mod tests {
 		assert_eq!(i32::atoi(b"-2147483648"), Result::Ok(-2147483648));
 		assert_eq!(i64::atoi(b"-9223372036854775808"), Result::Ok(-9223372036854775808));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(i128::atoi(b"-170141183460469231731687303715884105728"), Result::Ok(-170141183460469231731687303715884105728));
 		
 	}
@@ -807,7 +847,7 @@ mod tests {
 		assert_eq!(u32::atoi(b"128I"), Result::Err(AtoiErr::ByteUnk(b'I')));
 		assert_eq!(u64::atoi(b"128N"), Result::Err(AtoiErr::ByteUnk(b'N')));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi(b"128."), Result::Err(AtoiErr::ByteUnk(b'.')));
 	}
 	
@@ -818,7 +858,7 @@ mod tests {
 		assert_eq!(u32::atoi_stop(b"128I", b'I'), Result::Ok(128));
 		assert_eq!(u64::atoi_stop(b"128N", b'N'), Result::Ok(128));
 		
-		#[cfg(unstable)]
+		//#[cfg(unstable)]
 		assert_eq!(u128::atoi_stop(b"128.", b'.'), Result::Ok(128));
 	}
 	

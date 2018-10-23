@@ -14,7 +14,7 @@ pub fn main() {
 	print_usize(num);
 	
 	
-	let num = usize::atoi_iter(&mut b"1245".iter());
+	let num = usize::atoi_iter(b"1245".iter());
 	assert_eq!(num, Result::Ok(1245));
 	print_usize(num);
 	
