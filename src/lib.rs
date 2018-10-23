@@ -682,14 +682,14 @@ macro_rules! atoi_build_type {
 	(u, $($t:ty),+ ) => {
 		$(
 		impl Atoi<$t> for $t {
-			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< Self > {
+			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< $t > {
 				atoi_build!(unsigned, iter);
 			}
 
-			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< $t > {
 				atoi_build!(unsigned, iter, end);
 			}
-			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< $t > {
 				atoi_build!(unsigned_wait_end, iter, end);
 			}
 		}
@@ -698,14 +698,14 @@ macro_rules! atoi_build_type {
 	(i, $($t:ty),+ ) => {
 		$(
 		impl Atoi<$t> for $t {
-			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< Self > {
+			fn atoi_iter<'a, I: Iterator<Item=&'a u8>>(mut iter: I) -> AtoiResult< $t > {
 				atoi_build!(signed, iter);
 			}
 
-			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< $t > {
 				atoi_build!(signed, iter, end);
 			}
-			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< Self > {
+			fn atoi_iter_wait_stop<'a, I: Iterator<Item=&'a u8>>(mut iter: I, end: u8) -> AtoiResult< $t > {
 				atoi_build!(signed_wait_end, iter, end);
 			}
 		}
